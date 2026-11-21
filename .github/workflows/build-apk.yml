@@ -1,0 +1,70 @@
+name: Build APK Bimbel Cendekia
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode dari repository
+        uses: actions/checkout@v4
+
+      - name: Siapkan Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Siapkan Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Siapkan Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Siapkan folder web & Capacitor
+        run: |
+          mkdir -p www
+          cp index.html www/
+          npm init -y
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npx cap init "Bimbel Cendekia" "com.bimbelcendekia.app" --web-dir=www
+          npx cap add android
+
+      - name: Izinkan navigasi ke Google Apps Script di dalam aplikasi
+        run: |
+          node -e '
+            const fs = require("fs");
+            const jsonPath = "capacitor.config.json";
+            const tsPath = "capacitor.config.ts";
+            const allowList = ["script.google.com", "*.googleusercontent.com", "drive.google.com", "wa.me", "api.whatsapp.com"];
+            if (fs.existsSync(jsonPath)) {
+              const cfg = JSON.parse(fs.readFileSync(jsonPath, "utf8"));
+              cfg.server = { ...(cfg.server || {}), allowNavigation: allowList };
+              fs.writeFileSync(jsonPath, JSON.stringify(cfg, null, 2));
+            } else if (fs.existsSync(tsPath)) {
+              let content = fs.readFileSync(tsPath, "utf8");
+              content = content.replace(
+                /webDir:\s*[\x27"]www[\x27"]/,
+                `webDir: "www",\n  server: { allowNavigation: ${JSON.stringify(allowList)} }`
+              );
+              fs.writeFileSync(tsPath, content);
+            }
+          '
+          npx cap sync android
+
+      - name: Rakit file APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Simpan hasil APK agar bisa diunduh
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bimbel-Cendekia-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
