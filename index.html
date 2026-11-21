@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bimbel Cendekia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --emerald: #075b43;
+      --emerald-dark: #064e3b;
+      --gold: #b89548;
+      --bg: #f4f7f6;
+    }
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { margin: 0; background: var(--bg); color: #1e293b; }
+    header {
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+      color: white;
+      padding: 24px 20px 28px;
+      border-bottom: 4px solid var(--gold);
+      border-radius: 0 0 22px 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    header p { margin: 4px 0 0; font-size: 13px; color: #e2e8f0; }
+    .container { padding: 18px; max-width: 500px; margin: auto; }
+    .menu-grid { display: grid; gap: 12px; }
+    .card-btn {
+      display: flex; align-items: center; gap: 14px;
+      background: white; border: 1px solid #e2e8f0;
+      border-left: 5px solid var(--emerald);
+      border-radius: 14px; padding: 16px;
+      text-decoration: none; color: #0f172a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      cursor: pointer; text-align: left; width: 100%;
+    }
+    .card-btn:active { transform: scale(0.98); background: #f8fafc; }
+    .icon-box {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: #ecfdf5; color: var(--emerald);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .card-title { font-weight: 700; font-size: 15px; margin-bottom: 3px; }
+    .card-desc { font-size: 12px; color: #64748b; line-height: 1.35; }
+    .section-box {
+      display: none; background: white; border-radius: 16px;
+      padding: 18px; margin-top: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+    .section-box.active { display: block; }
+    .back-btn {
+      background: #e2e8f0; border: none; padding: 8px 14px;
+      border-radius: 8px; font-weight: 600; font-size: 12px;
+      margin-bottom: 14px; cursor: pointer;
+    }
+    label { display: block; font-size: 12px; font-weight: 600; margin: 10px 0 4px; }
+    input, select, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1;
+      border-radius: 10px; font-size: 14px;
+    }
+    .btn-wa {
+      width: 100%; margin-top: 16px; padding: 13px;
+      background: var(--emerald); color: white; border: none;
+      border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer;
+    }
+    .kelas-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+    .kelas-item {
+      background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px;
+      padding: 12px; text-align: center; font-weight: 700; color: var(--emerald);
+      text-decoration: none; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bimbel Cendekia</h1>
+  <p>Portal Tutor &amp; Administrasi Pembelajaran</p>
+</header>
+
+<div class="container">
+  <!-- MENU UTAMA -->
+  <div id="homeMenu" class="menu-grid">
+    <button class="card-btn" onclick="bukaHalaman('profil')">
+      <div class="icon-box">🏫</div>
+      <div>
+        <div class="card-title">Profil Lembaga</div>
+        <div class="card-desc">Visi, program belajar, dan informasi Bimbel Cendekia</div>
+      </div>
+    </button>
+
+    <button class="card-btn" onclick="bukaHalaman('kurikulum')">
+      <div class="icon-box">📚</div>
+      <div>
+        <div class="card-title">Kurikulum Ajar &amp; Bank Soal</div>
+        <div class="card-desc">Materi ringkas, latihan cepat &amp; LKPD siap cetak (Kelas 1–6)</div>
+      </div>
+    </button>
+
+    <!-- GANTI URL DI BAWAH INI DENGAN URL WEB APP ABSENSI GOOGLE APPS SCRIPT -->
+    <a class="card-btn" href="https://script.google.com/macros/s/GANTI_DENGAN_URL_ABSENSI_ASLI/exec">
+      <div class="icon-box">📝</div>
+      <div>
+        <div class="card-title">Absensi Tutor</div>
+        <div class="card-desc">Input kehadiran sesi privat/klasikal &amp; rekap mengajar</div>
+      </div>
+    </a>
+
+    <button class="card-btn" onclick="bukaHalaman('laporanWa')">
+      <div class="icon-box">💬</div>
+      <div>
+        <div class="card-title">Laporan Catatan Pertemuan</div>
+        <div class="card-desc">Buat ringkasan hasil belajar siswa siap kirim ke WhatsApp</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- HALAMAN PROFIL LEMBAGA -->
+  <div id="profil" class="section-box">
+    <button class="back-btn" onclick="kembaliMenu()">← Kembali ke Menu</button>
+    <h3 style="margin-top:0; color:var(--emerald);">Profil Bimbel Cendekia</h3>
+    <p style="font-size:13px; line-height:1.6;">
+      <strong>Alamat:</strong> Santren RT01/RW08, Gunungpring, Muntilan, Magelang.<br><br>
+      <strong>Layanan Program:</strong><br>
+      • Kelas Reguler / Klasikal SD (Kelas 1–6)<br>
+      • Kelas Privat (1–2 Anak) Pendampingan Tugas &amp; Pemahaman Konsep<br>
+      • Latihan Soal Terarah &amp; Penguatan Literasi-Numerasi
+    </p>
+  </div>
+
+  <!-- HALAMAN KURIKULUM & BANK SOAL -->
+  <div id="kurikulum" class="section-box">
+    <button class="back-btn" onclick="kembaliMenu()">← Kembali ke Menu</button>
+    <h3 style="margin-top:0; color:var(--emerald);">Kurikulum &amp; Bank Soal SD</h3>
+    <p style="font-size:12px; color:#64748b;">Pilih jenjang kelas untuk membuka materi mudah dipahami, latihan cepat, atau LKPD siap cetak (tautan Google Drive):</p>
+    <div class="kelas-grid">
+      <a class="kelas-item" href="https://drive.google.com">📘 Kelas 1 SD</a>
+      <a class="kelas-item" href="https://drive.google.com">📗 Kelas 2 SD</a>
+      <a class="kelas-item" href="https://drive.google.com">📙 Kelas 3 SD</a>
+      <a class="kelas-item" href="https://drive.google.com">📕 Kelas 4 SD</a>
+      <a class="kelas-item" href="https://drive.google.com">📓 Kelas 5 SD</a>
+      <a class="kelas-item" href="https://drive.google.com">🎓 Kelas 6 SD</a>
+    </div>
+  </div>
+
+  <!-- HALAMAN LAPORAN PERTEMUAN WA -->
+  <div id="laporanWa" class="section-box">
+    <button class="back-btn" onclick="kembaliMenu()">← Kembali ke Menu</button>
+    <h3 style="margin-top:0; color:var(--emerald);">Catatan Pertemuan (WA)</h3>
+    <label>Nama Siswa</label>
+    <input type="text" id="namaSiswa" placeholder="Contoh: Ananda Rafa">
+    <label>Kelas</label>
+    <select id="kelasSiswa">
+      <option>Kelas 1 SD</option><option>Kelas 2 SD</option><option>Kelas 3 SD</option>
+      <option>Kelas 4 SD</option><option>Kelas 5 SD</option><option>Kelas 6 SD</option>
+    </select>
+    <label>Materi yang Dipelajari</label>
+    <input type="text" id="materiBelajar" placeholder="Contoh: Pecahan Senilai & Soal Cerita">
+    <label>Catatan Perkembangan / PR</label>
+    <textarea id="catatanSiswa" rows="3" placeholder="Contoh: Sudah paham konsep dasar, perlu latihan ketelitian perkalian."></textarea>
+    <button class="btn-wa" onclick="kirimKeWA()">Kirim Laporan via WhatsApp</button>
+  </div>
+</div>
+
+<script>
+  function bukaHalaman(id) {
+    document.getElementById('homeMenu').style.display = 'none';
+    document.querySelectorAll('.section-box').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function kembaliMenu() {
+    document.querySelectorAll('.section-box').forEach(el => el.classList.remove('active'));
+    document.getElementById('homeMenu').style.display = 'grid';
+  }
+  function kirimKeWA() {
+    const nama = document.getElementById('namaSiswa').value || '-';
+    const kelas = document.getElementById('kelasSiswa').value;
+    const materi = document.getElementById('materiBelajar').value || '-';
+    const catatan = document.getElementById('catatanSiswa').value || '-';
+    const pesan = `*LAPORAN BELAJAR BIMBEL CENDEKIA*\n\n` +
+                  `• *Nama Siswa:* ${nama}\n` +
+                  `• *Kelas:* ${kelas}\n` +
+                  `• *Materi:* ${materi}\n` +
+                  `• *Catatan:* ${catatan}\n\n` +
+                  `_Terima kasih atas kerja samanya, Ayah/Bunda._`;
+    window.open('https://wa.me/?text=' + encodeURIComponent(pesan), '_blank');
+  }
+</script>
+</body>
+</html>
